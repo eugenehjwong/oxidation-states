@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Oxidation State Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 700px;
+      margin: auto;
+      background-color: #f7f7f7;
+    }
+    h1 {
+      text-align: center;
+    }
+    #formula {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    #buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 15px;
+      font-size: 1em;
+      cursor: pointer;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      transition: background-color 0.2s;
+    }
+    button:hover {
+      background-color: #e0e0e0;
+    }
+    #feedback {
+      font-weight: bold;
+      text-align: center;
+      font-size: 1.2em;
+      margin-top: 20px;
+    }
+    #next-btn {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      font-size: 1em;
+      cursor: pointer;
+      border-radius: 5px;
+      border: 1px solid #007bff;
+      background-color: #007bff;
+      color: white;
+    }
+    #next-btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Oxidation State Quiz</h1>
+  <div id="formula">Loading...</div>
+  <div id="buttons"></div>
+  <div id="feedback"></div>
+  <button id="next-btn">Next Question</button>
+
+  <script>
+    // List of questions
+    const questions = [
+      { formula: 'NaCl', element: 'Na', answer: +1 },
+      { formula: 'MgBr₂', element: 'Mg', answer: +2 },
+      { formula: 'Al₂O₃', element: 'Al', answer: +3 },
+      { formula: 'CaS', element: 'Ca', answer: +2 },
+      { formula: 'LiH', element: 'Li', answer: +1 },
+      { formula: 'FeCl₂', element: 'Fe', answer: +2 },
+      { formula: 'FeCl₃', element: 'Fe', answer: +3 },
+      { formula: 'CuO', element: 'Cu', answer: +2 },
+      { formula: 'Cu₂O', element: 'Cu', answer: +1 },
+      { formula: 'SnO₂', element: 'Sn', answer: +4 },
+      { formula: 'CO₂', element: 'C', answer: +4 },
+      { formula: 'SF₆', element: 'S', answer: +6 },
+      { formula: 'N₂O₄', element: 'N', answer: +4 },
+      { formula: 'PCl₅', element: 'P', answer: +5 },
+      { formula: 'NaNO₃', element: 'N', answer: +5 },
+      { formula: 'K₂SO₄', element: 'S', answer: +6 },
+      { formula: 'Ca(OH)₂', element: 'Ca', answer: +2 },
+      { formula: '(NH₄)₂S', element: 'N', answer: -3 },
+      { formula: 'K₃PO₄', element: 'P', answer: +5 }
+    ];
+
+    let currentQuestion;
+
+    const formulaDiv = document.getElementById('formula');
+    const buttonsDiv = document.getElementById('buttons');
+    const feedbackDiv = document.getElementById('feedback');
+    const nextBtn = document.getElementById('next-btn');
+
+    function loadQuestion() {
+      feedbackDiv.textContent = '';
+      // Pick a random question
+      currentQuestion = questions[Math.floor(Math.random() * questions.length)];
+      formulaDiv.innerHTML = `Find the oxidation state of <strong>${currentQuestion.element}</strong> in <strong>${currentQuestion.formula}</strong>`;
+    }
+
+    function createButtons() {
+      buttonsDiv.innerHTML = '';
+      for (let i = -8; i <= 8; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = (i >= 0 ? '+' : '') + i;
+        btn.addEventListener('click', () => checkAnswer(i));
+        buttonsDiv.appendChild(btn);
+      }
+    }
+
+    function checkAnswer(selected) {
+      const correct = currentQuestion.answer;
+      if (selected === correct) {
+        feedbackDiv.textContent = '✅ Correct!';
+        feedbackDiv.style.color = 'green';
+      } else {
+        feedbackDiv.textContent = `❌ Incorrect. The correct answer is ${correct > 0 ? '+' : ''}${correct}`;
+        feedbackDiv.style.color = 'red';
+      }
+    }
+
+    nextBtn.addEventListener('click', loadQuestion);
+
+    // Initialize app
+    createButtons();
+    loadQuestion();
+  </script>
+</body>
+</html>
